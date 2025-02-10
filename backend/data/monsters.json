@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Rakshasa",
+    "strength": 95,
+    "height": 3.2,
+    "type": "Demonic",
+    "size": "Large",
+    "health": 100
+  },
+  {
+    "name": "Asura",
+    "strength": 80,
+    "height": 2.8,
+    "type": "Demonic",
+    "size": "Medium",
+    "health": 100
+  },
+  {
+    "name": "Makara",
+    "strength": 70,
+    "height": 5.0,
+    "type": "Aquatic",
+    "size": "Huge",
+    "health": 100
+  },
+  {
+    "name": "Gorgath",
+    "strength": 95,
+    "height": 3.2,
+    "type": "Beast",
+    "size": "Large",
+    "health": 100
+  },
+  {
+    "name": "Zyglon",
+    "strength": 80,
+    "height": 2.5,
+    "type": "Undead",
+    "size": "Medium",
+    "health": 100
+  },
+  {
+    "name": "Volcryn",
+    "strength": 110,
+    "height": 4.1,
+    "type": "Dragon",
+    "size": "Huge",
+    "health": 100
+  },
+  {
+    "name": "Kragnar",
+    "strength": 70,
+    "height": 2.1,
+    "type": "Elemental",
+    "size": "Medium",
+    "health": 100
+  },
+  {
+    "name": "Mirefang",
+    "strength": 85,
+    "height": 2.8,
+    "type": "Reptilian",
+    "size": "Large",
+    "health": 100
+  }
+]

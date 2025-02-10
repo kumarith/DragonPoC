@@ -21,7 +21,7 @@ interface MonsterProps {
 
   
   useEffect(() => {
-    fetch("http://localhost:3000/monsterslist")
+    fetch("http://localhost:3000/monsterlist")
       .then((res) => res.json())
       .then((data) => setMonsters(data.monsters))
       .catch((err) => console.error("Error fetching monsters:", err));
@@ -30,9 +30,9 @@ interface MonsterProps {
   
   useEffect(() => {
     if (selectedMonster) {
-      fetch(`http://localhost:3000/monsters?name=${selectedMonster}`)
+      fetch(`http://localhost:3000/monster?name=${selectedMonster}`)
         .then((res) => res.json())
-        .then((data) => {setMonsterDetails(data[0] || null) , onMonsterChange(data[0] || null)}) // update resepcitve fighter in parent ( figher1,2..)
+        .then((data) => {setMonsterDetails(data || null) , onMonsterChange(data || null)}) // update resepcitve fighter in parent ( figher1,2..)
         .catch((err) => console.error("Error fetching monster details:", err));
         console.log("details", monsterDetails)
     }
