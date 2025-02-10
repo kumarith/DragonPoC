@@ -5,7 +5,7 @@ npm install
 npm run dev
 ```
 
-## Bakcend
+## Backend
 - Update initial data in /data/monsters.json ( that will be loaded in memory)
 ```sh
 npm insall
