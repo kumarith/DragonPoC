@@ -101,6 +101,8 @@ function App() {
               <li key={index}>{winner}</li>
             ))}
           </ul>
+          <a href="/winners" className="text-blue-500">
+            Details </a>
         </div>
       )}
     </>
