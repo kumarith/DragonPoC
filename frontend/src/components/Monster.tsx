@@ -36,21 +36,22 @@ const Monster: React.FC<MonsterProps> = ({
       fetch(`http://localhost:3000/monster?name=${selectedMonster}`)
         .then((res) => res.json())
         .then((data) => {
-          setMonsterDetails(data || null), onMonsterChange(data || null);
-        }) // update resepcitve fighter in parent ( figher1,2..)
+          setMonsterDetails(data || null);
+          onMonsterChange(data || null);
+        })
         .catch((err) => console.error("Error fetching monster details:", err));
-      console.log("details", monsterDetails);
     }
   }, [selectedMonster, refreshKey]);
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-gray-100 rounded-lg shadow-lg flex flex-col">
+    <div className="max-w-sm mx-auto p-4 bg-gray-100 rounded-lg shadow-lg">
+      {/* Monster Selection card like style*/}
       <select
-        className="w-full p-2 border border-gray-300 rounded-lg mb-4"
+        className="w-full p-3 mb-4 border border-gray-300 rounded-lg"
         value={selectedMonster}
         onChange={(e) => setSelectedMonster(e.target.value)}
       >
-        <option value="">select a monster</option>
+        <option value="">Select a Monster</option>
         {monsters.map((monster) => (
           <option key={monster} value={monster}>
             {monster}
@@ -58,26 +59,29 @@ const Monster: React.FC<MonsterProps> = ({
         ))}
       </select>
 
+      {/* Monster Details Card */}
       {monsterDetails && (
-        <div className="p-4 border border-gray-300 rounded-lg bg-white">
-          <h3 className="text-lg font-semibold mb-4">{monsterDetails.name} (won {noOfWins} times ) </h3>
-       
+        <div className="bg-white p-4 rounded-lg shadow-md">
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-gray-800">
+              {monsterDetails.name} (Won {noOfWins} times)
+            </h3>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="text-sm font-medium text-gray-600">Type:</div>
+            <div className="text-sm text-gray-700">{monsterDetails.type}</div>
 
-          <div className="grid grid-cols-2 gap-2">
-            <p className="font-medium text-left">Type:</p>
-            <p className="text-left">{monsterDetails.type}</p>
+            <div className="text-sm font-medium text-gray-600">Strength:</div>
+            <div className="text-sm text-gray-700">{monsterDetails.strength}</div>
 
-            <p className="font-medium text-left">Strength:</p>
-            <p className="text-left">{monsterDetails.strength}</p>
+            <div className="text-sm font-medium text-gray-600">Height:</div>
+            <div className="text-sm text-gray-700">{monsterDetails.height}m</div>
 
-            <p className="font-medium text-left">Height:</p>
-            <p className="text-left">{monsterDetails.height}m</p>
+            <div className="text-sm font-medium text-gray-600">Size:</div>
+            <div className="text-sm text-gray-700">{monsterDetails.size}</div>
 
-            <p className="font-medium text-left">Size:</p>
-            <p className="text-left">{monsterDetails.size}</p>
-
-            <p className="font-medium text-left">Health:</p>
-            <p className="text-left">{monsterDetails.health}</p>
+            <div className="text-sm font-medium text-gray-600">Health:</div>
+            <div className="text-sm text-red-700">{monsterDetails.health}</div>
           </div>
         </div>
       )}

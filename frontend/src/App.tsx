@@ -8,6 +8,7 @@ function App() {
   const [winnerNames, setWinnerNames] = useState<string[]>([]);
   const [refreshKey, setRefreshKey] = useState<number>(0); // refresh new mosnter componen ( as now has reduced health )
   const [likelyWinner, setLikelyWinner] = useState<string | null>(null);
+  const [isFightDisabled, setIsFightDisabled] = useState<boolean>(false);
 
   const countWins = (fighter: string): number => {
     return winnerNames.filter((name) => name === fighter).length;
@@ -22,6 +23,8 @@ function App() {
       return alert("Both fighters must be different!");
     }
 
+   
+
     try {
       const response = await fetch(
         `http://localhost:3000/fight?fighter1=${fighter1.name}&fighter2=${fighter2.name}`,
@@ -34,6 +37,7 @@ function App() {
       if (data.winner && data.winner !== "TBD") {
         alert(`The winner is: ${data.winner}`);
         setWinnerNames((prev) => [...prev, data.winner]);
+        setIsFightDisabled(true);
       }
       setRefreshKey((prev) => prev + 1);
     } catch (err) {
@@ -52,7 +56,16 @@ function App() {
           : fighter1?.name || null;
     }
     setLikelyWinner(likelyWinner);
+    //setIsFightDisabled(true);
+
   }, [winnerNames, fighter2, fighter1]);
+
+  useEffect(() => {
+    // re-enable fight when dropdowns changed.
+    if (fighter1 && fighter2) {
+      setIsFightDisabled(false);
+    }
+  }, [fighter1, fighter2]); 
 
   return (
     <>
@@ -73,6 +86,7 @@ function App() {
                 <button
                   onClick={handleFight}
                   className="px-6 py-2 bg-blue-500 text-white rounded-full"
+                  disabled={isFightDisabled} 
                 >
                   Fight
                 </button>

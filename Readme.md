@@ -2,6 +2,11 @@
 
 ## Frontend
 - Built with Vite + React + Typescript + TailwindCSS
+- Makes API calls to backend to fetch monster list and details as well as winnerlist.
+- Also, maintians winnerlist in state, to calculate the likely winner in a match.
+- Componentaized Monster component that will be renderd for both fighters. 
+- Winner page is routed seperately. 
+
 ```sh
 npm install
 npm run dev
