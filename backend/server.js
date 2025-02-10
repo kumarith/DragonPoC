@@ -8,13 +8,23 @@ const PORT = 3000;
 app.use(cors()); 
 
 const monstersFilePath = path.join(__dirname, "data", "monsters.json");
+const fights = path.join(__dirname, "data", "fightresults.json");
+
 
 // read the monsters data from file as json
 const readMonstersData = () => {
   const data = fs.readFileSync(monstersFilePath, "utf-8");
   return JSON.parse(data);
+ 
+};
+
+const readWinnersData = () => {
+  const data = fs.readFileSync(fights, "utf-8");
+  return JSON.parse(data);
+ 
 };
 const monsters = readMonstersData();
+const winnerList = readWinnersData();
 // locally save the monsters data in variable , to update the health during fight.
 
 //  list of monsters
@@ -63,13 +73,14 @@ app.post("/fight", (req, res) => {
   try {
    // const monsters = readMonstersData();
     const monster1 = monsters.find((m) => m.name.toLowerCase() === fighter1.toLowerCase());
-    const monster2 = monsters.find((m) => m.name.toLowerCase() === fighter1.toLowerCase());
+    const monster2 = monsters.find((m) => m.name.toLowerCase() === fighter2.toLowerCase());
     let winner = "TBD"; //to  be decided status.
     if (monster1 && monster2) {
       const damage = Math.floor(Math.random() * 10);
-      if (monster2.health>=0) monster1.health -= damage; // if other mosster is already 0, it cant do damage.
+      if (monster2.health>=0) monster1.health -= damage; // if other monster is already 0, it cant do damage.
       const damage2 = Math.floor(Math.random() * 10);
       if (monster1.health>=0) monster2.health -= damage2;
+
       if (monster1.health <= 0) {
         monster1.health = 0;
         winner = monster2.name;
@@ -83,6 +94,16 @@ app.post("/fight", (req, res) => {
         monster2.health = 0;
         winner = "TBD";
       }
+
+  if(winner !== "TBD") {
+  const winnerRecord = {
+    timestamp: new Date().toISOString(), // Current timestamp
+    winner: winner,
+  };
+  
+  winnerList.push(winnerRecord);
+  
+  }
       res.status(200).json({  winner: winner });
     } else {
       res.status(404).json({ error: "Monster not found." });
@@ -93,6 +114,20 @@ app.post("/fight", (req, res) => {
     res.status(500).json({ error: "Failed to read monster data." });
   }
 }); // fight end
+
+
+app.get('/winners', (req, res) => {
+  try {
+    if (winnerList.length > 0) {
+      res.status(200).json(winnerList);
+    } else {
+      res.status(404).json({ message: "No winners found." });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to retrieve winner list." });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
